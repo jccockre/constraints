@@ -2,7 +2,6 @@
 using System;
 
 using EngineeringUnits;
-using EngineeringUnits.Units;
 
 namespace AnalogDevices.Constraints.Parameters
 {
@@ -25,19 +24,9 @@ namespace AnalogDevices.Constraints.Parameters
         {
             get
             {
-                dynamic resultUncast = Computation(Alpha.Value);
-                P newP = new P();
-                switch (newP)
-                {
-                    // TODO: Replace this with IntelligentCast when available - or maybe ditch it entirely
-                    case Power p: resultUncast = (Power) resultUncast; break;
-                    case ElectricCurrent p: resultUncast = (ElectricCurrent) resultUncast; break;
-                    case ElectricPotential p: resultUncast = (ElectricPotential) resultUncast; break;
-                    case Frequency p: resultUncast = Frequency.From((double)((BaseUnit)resultUncast).BaseunitValue, FrequencyUnit.Hertz); break;
-                    case Duration p: resultUncast = (Duration) resultUncast; break;
-                    default: resultUncast = (P) resultUncast; break;
-                }
-                return resultUncast as P;
+                UnknownUnit resultUncast = Computation(Alpha.Value);
+                BaseUnit cast = resultUncast.IntelligentCast();
+                return (P)cast;
             }
             set { } 
         }

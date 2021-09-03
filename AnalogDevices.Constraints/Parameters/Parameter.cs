@@ -240,13 +240,13 @@ namespace AnalogDevices.Constraints.Parameters
             where P : BaseUnit, new()
             where Q : BaseUnit, new()
         {
-            return new PowerParameter<P, Q>(baseB, exponent);
+            return new ExponentialParameter<P, Q>(baseB, exponent);
         }
 
         public static QuantitativeParameterBase<BaseUnit> ToThePowerOf<Q>(this QuantitativeParameterBase<Q> baseB, QuantitativeParameterBase<BaseUnit> exponent)
             where Q : BaseUnit, new()
         {
-            return new PowerParameter<BaseUnit, Q>(baseB, exponent);
+            return new ExponentialParameter<BaseUnit, Q>(baseB, exponent);
         }
 
         public static QuantitativeParameterBase<P> ToThePowerOf<P, Q>(this QuantitativeParameterBase<Q> baseB, BaseUnit exponent)

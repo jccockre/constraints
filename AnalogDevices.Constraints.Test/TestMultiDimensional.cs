@@ -15,9 +15,6 @@ namespace AnalogDevices.Constraints.Test
         public TimeParameter FrameDuration = new TimeParameter("Frame Duration", 20, DurationUnit.Millisecond);
         public ScalarParameter NumSamples = new ScalarParameter("Number of Samples", 1024);
 
-        public VoltageParameter Voltage = new VoltageParameter("Voltage", 2, ElectricPotentialUnit.Millivolt);
-        public CurrentParameter Current = new CurrentParameter("Current", 3, ElectricCurrentUnit.Milliampere);
-
         [Test]
         public void TestMultiDimensional01()
         {
@@ -32,15 +29,17 @@ namespace AnalogDevices.Constraints.Test
         [Test]
         public void TestMultiDimensional02()
         {
-            var power = Voltage.Times<Power, ElectricPotential, ElectricCurrent>(Current);
-            var constraint1 = power.LessThanOrEqualTo(10, PowerUnit.Microwatt);
-            var constraint2 = power.LessThanOrEqualTo(1, PowerUnit.Microwatt);
+            var Voltage = new VoltageParameter("Voltage", 2, ElectricPotentialUnit.Millivolt);
+            var Current = new CurrentParameter("Current", 3, ElectricCurrentUnit.Milliampere);
 
-            var result1 = constraint1.Validate();
-            var result2 = constraint2.Validate();
+            // don't consume more than 1 microwatt of power
+            var ConstrainPowerConsumption = Voltage.Times(Current).AtMost(Power.FromMicrowatts(1));
+        
+            var Result = ConstrainPowerConsumption.Validate();
 
-            Assert.IsTrue(result1.Status);
-            Assert.IsFalse(result2.Status);
+            // Result.Status is False
+            // Result.Warning is "Voltage * Current (6e-06 W) must be less than or equal to 1E-06 W"
+            Assert.IsFalse(Result.Status);
         }
     }
 }

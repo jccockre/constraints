@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EngineeringUnits, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>packages\EngineeringUnits.1.1.8\lib\net40\EngineeringUnits.dll</HintPath>
+      <HintPath>packages\EngineeringUnits.1.1.24\lib\net472\EngineeringUnits.dll</HintPath>
     </Reference>
     <Reference Include="Fractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=e629dc3e25c47cef, processorArchitecture=MSIL">
       <HintPath>packages\Fractions.6.0.0\lib\net45\Fractions.dll</HintPath>
@@ -68,7 +68,7 @@
     <Compile Include="Parameters\ConstantQuantitativeParameter{Q}.cs" />
     <Compile Include="Parameters\ImmutableQuantitativeParameterBase{Q}.cs" />
     <Compile Include="Parameters\MutableTypedParameter{T}.cs" />
-    <Compile Include="Parameters\PowerParameter{P}{Q}.cs" />
+    <Compile Include="Parameters\ExponentialParameter{P}{Q}.cs" />
     <Compile Include="Parameters\VoltageParameter.cs" />
     <Compile Include="Parameters\FrequencyParameter.cs" />
     <Compile Include="Parameters\QuotientParameter{P}{Q}{R}.cs" />
