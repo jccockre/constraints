@@ -11,8 +11,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/jccockre/constraints">
-    <img src="ADI_Logo_AWP.png" alt="Logo" width="80" height="80">
+  <a href="https://www.analog.com/">
+    <img src="ADI_Logo_AWP.png" alt="Logo" width="200" height="79">
   </a>
 
   <h3 align="center">AnalogDevices.Constraints</h3>
@@ -122,7 +122,7 @@ Request validation on-demand.
 Propagate new input from the user and re-check the constraints.
 ```
  Voltage.Value = 1; // 1 millivolt
- Current.Value = 0.5; // 0.5 milliamps // Result.Status is False
+ Current.Value = 0.5; // 0.5 milliamps
  
  // Result.Status is True
  Result = ConstrainPowerConsumption.Validate();
@@ -132,13 +132,14 @@ Alternatively, register UI components as subscribers to the constraints to recei
  class MyFormElement : FormElement, ISubscriber
  {
     protected Constraint powerConsumption { get; }
-	public MyFormElement(VoltageParameter voltage, CurrentParameter current) 
-	{
-	   this.powerConsumption = voltage.Times(current).AtMost(Power.FromMicrowatts(1));
-	   
-	   // subscribe to notifications
-	   this.powerConsumption.AddSubscriber(this);
-	}
+
+    public MyFormElement(VoltageParameter voltage, CurrentParameter current) 
+    {
+       this.powerConsumption = voltage.Times(current).AtMost(Power.FromMicrowatts(1));
+
+       // subscribe to notifications
+       this.powerConsumption.AddSubscriber(this);
+    }
 	
     public void NotifyChanged()
     {
@@ -173,7 +174,7 @@ Contributions are what make the open source community such an amazing place to l
 <!-- LICENSE -->
 ## License
 
-Distributed under the modified MIT X11 License. See <a href="https://github.com/jccockre/constraints/license.txt">LICENSE.txt</a> for more information.
+Distributed under the modified MIT X11 License. See <a href="https://github.com/jccockre/constraints/blob/main/LICENSE.txt">LICENSE.txt</a> for more information.
 
 
 
