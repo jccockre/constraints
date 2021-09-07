@@ -14,5 +14,10 @@ namespace AnalogDevices.Constraints
             Name = name;
             DataType = typeof(T);
         }
+
+        public override string ToString()
+        {
+            return $"{Name} ({Value})";
+        }
     }
 }

@@ -512,22 +512,22 @@ namespace AnalogDevices.Constraints.Parameters
 
         public static ConstraintBase IsOneOf<K>(this EnumParameter<K> parameter, params K[] goodValues) where K : struct, IConvertible
         {
-            return Constraints.OneOf(parameter, goodValues);
+            return Constraints.IsOneOf(parameter, goodValues);
         }
 
         public static ConstraintBase IsOneOf<K>(this EnumParameter<K> parameter, params EnumParameter<K>[] goodValues) where K : struct, IConvertible
         {
-            return Constraints.OneOf(parameter, goodValues);
+            return Constraints.IsOneOf(parameter, goodValues);
         }
 
         public static ConstraintBase IsNotAnyOf<K>(this EnumParameter<K> parameter, params K[] badValues) where K : struct, IConvertible
         {
-            return Constraints.NotAnyOf(parameter, badValues);
+            return Constraints.IsNotAnyOf(parameter, badValues);
         }
 
         public static ConstraintBase IsNotAnyOf<K>(this EnumParameter<K> parameter, params EnumParameter<K>[] badValues) where K : struct, IConvertible
         {
-            return Constraints.NotAnyOf(parameter, badValues);
+            return Constraints.IsNotAnyOf(parameter, badValues);
         }
 
         #endregion

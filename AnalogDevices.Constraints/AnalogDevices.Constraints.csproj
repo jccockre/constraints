@@ -55,7 +55,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Antecedent.cs" />
     <Compile Include="BaseUnitExtensions.cs" />
+    <Compile Include="Constraints\ConditionalConstraint.cs" />
     <Compile Include="Constraints\EnumConstraint{K}.cs" />
     <Compile Include="Constraints\ModuloConstraint{Q}.cs" />
     <Compile Include="Parameters\AbsoluteValueParameter{Q}.cs" />

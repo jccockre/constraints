@@ -24,6 +24,46 @@ namespace AnalogDevices.Constraints
             return new NotConstraint(self);
         }
 
+        public static Antecedent If(ConstraintBase condition)
+        {
+            return new Antecedent(condition);
+        }
+
+        public static ConditionalConstraint Then(this Antecedent self, ConstraintBase consequent)
+        {
+            var output = new ConditionalConstraint(self.Condition, consequent);
+            ConditionalConstraint current = self.Parent;
+            if (null == current)
+            {
+                return output;
+            }
+            else
+            {
+                while (null != current.Alternate)
+                {
+                    current = current.Alternate as ConditionalConstraint;
+                }
+                current.SetAlternate(output);
+                return self.Parent;
+            }
+        }
+
+        public static ConditionalConstraint Else(this ConditionalConstraint self, ConstraintBase alternate)
+        {
+            ConditionalConstraint current = self;
+            while (null != current.Alternate)
+            {
+                current = current.Alternate as ConditionalConstraint;
+            }
+            current.SetAlternate(alternate);
+            return self;
+        }
+
+        public static Antecedent ElseIf(this ConditionalConstraint self, ConstraintBase condition)
+        {
+            return new Antecedent(condition, self);
+        }
+
         internal static ConstraintBase MinimumClosed<Q>(QuantitativeParameterBase<Q> parameter, Q minimum)
             where Q : BaseUnit, new()
         {
@@ -120,24 +160,44 @@ namespace AnalogDevices.Constraints
             return new ModuloZeroConstraintParameter<Q>(parameter, tolerance, modulus);
         }
 
-        public static ConstraintBase OneOf<K>(EnumParameter<K> parameter, params K[] goodValues) where K : struct, IConvertible
+        public static ConstraintBase IsOneOf<K>(EnumParameter<K> parameter, params K[] goodValues) where K : struct, IConvertible
         {
             return new EnumIsConstraintPrimitive<K>(parameter, goodValues);
         }
 
-        public static ConstraintBase OneOf<K>(EnumParameter<K> parameter, params EnumParameter<K>[] goodValues) where K : struct, IConvertible
+        public static ConstraintBase IsOneOf<K>(EnumParameter<K> parameter, params EnumParameter<K>[] goodValues) where K : struct, IConvertible
         {
             return new EnumIsConstraintParameter<K>(parameter, goodValues);
         }
 
-        public static ConstraintBase NotAnyOf<K>(EnumParameter<K> parameter, params K[] badValues) where K : struct, IConvertible
+        public static ConstraintBase Is<K>(EnumParameter<K> parameter, K goodValue) where K : struct, IConvertible
+        {
+            return IsOneOf<K>(parameter, new K[] { goodValue });
+        }
+
+        public static ConstraintBase Is<K>(EnumParameter<K> parameter, EnumParameter<K> goodValue) where K : struct, IConvertible
+        {
+            return IsOneOf<K>(parameter, new EnumParameter<K>[] { goodValue });
+        }
+
+        public static ConstraintBase IsNotAnyOf<K>(EnumParameter<K> parameter, params K[] badValues) where K : struct, IConvertible
         {
             return new EnumIsNotConstraintPrimitive<K>(parameter, badValues);
         }
 
-        public static ConstraintBase NotAnyOf<K>(EnumParameter<K> parameter, params EnumParameter<K>[] badValues) where K : struct, IConvertible
+        public static ConstraintBase IsNotAnyOf<K>(EnumParameter<K> parameter, params EnumParameter<K>[] badValues) where K : struct, IConvertible
         {
             return new EnumIsNotConstraintParameter<K>(parameter, badValues);
+        }
+
+        public static ConstraintBase IsNot<K>(EnumParameter<K> parameter, K badValue) where K : struct, IConvertible
+        {
+            return IsNotAnyOf<K>(parameter, new K[] { badValue });
+        }
+
+        public static ConstraintBase IsNot<K>(EnumParameter<K> parameter, EnumParameter<K> badValue) where K : struct, IConvertible
+        {
+            return IsNotAnyOf<K>(parameter, new EnumParameter<K>[] { badValue });
         }
     }
 }

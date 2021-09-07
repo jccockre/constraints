@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestConditionals.cs" />
     <Compile Include="TestBinaryNumericalParameters.cs" />
     <Compile Include="TestBinaryConstraintsParameter.cs" />
     <Compile Include="TestAbsoluteValue.cs" />
