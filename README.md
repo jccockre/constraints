@@ -151,6 +151,13 @@ Alternatively, register UI components as subscribers to the constraints to recei
  }
 ```
 
+Use human-readable logical operators to compose multiple constraints.
+
+```
+    var constraint1 = voltage.LessThan(ElectricPotential.FromMillivolts(2)).And(voltage.GreaterThan(ElectricPotential.FromMillivolts(1)));
+    var constraint2 = Constraints.If(lightSwitch.Is(SwitchPositions.ON)).Then(constraint1).Else(voltage.LessThan(ElectricPotential.FromMillivolts(0.1)));
+```
+
 <!-- ROADMAP -->
 ## Roadmap
 
